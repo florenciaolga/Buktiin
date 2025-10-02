@@ -17,7 +17,8 @@ import profile3 from "../profile3.jpeg";
 import profile4 from "../profile4.jpeg";
 
 import Dropdown from "./dropdown";
-import Footer from "./footer";
+import Footer from "./Footer";
+import Header from "./Header";
 import SearchBar from "./searchbar";
 
 function Home() {
@@ -43,6 +44,7 @@ function Home() {
   return (
     <div className="homepage">
       
+      <Header active="home" />
       <SearchBar />
       <Dropdown />
 

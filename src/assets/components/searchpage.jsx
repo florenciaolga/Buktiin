@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Dropdown from "../components/dropdown";
 import SearchBar from "./searchbar";
 import "./SearchPage.css";
@@ -52,8 +52,9 @@ const users = [
 
 export default function SearchPage() {
   return (
+    
     <div className="search-page">
-        <Header />
+      <Header active="cari" />
         
         <SearchBar />
 

@@ -7,7 +7,6 @@ body, html, .homepage {
   box-sizing: border-box;
 }
 
-/* 🔍 Header (search bar) */
 .header {
   display: flex;
   justify-content: center;
@@ -34,7 +33,7 @@ body, html, .homepage {
   font-size: 16px;
 }
 
-/* 📌 Scrollable Banner */
+
 .banner-scroll {
   display: flex;
   overflow-x: auto;
@@ -51,7 +50,7 @@ body, html, .homepage {
   object-fit: cover;
 }
 
-/* 📌 Skill Categories */
+
 .skill-category {
   padding: 20px;
 }
@@ -82,7 +81,7 @@ body, html, .homepage {
   margin: 0 auto 10px;
 }
 
-/* 📌 Trusted Workers */
+
 .workers {
   padding: 20px;
 }
@@ -129,7 +128,7 @@ body, html, .homepage {
   font-size: 14px;
 }
 
-/* 📌 Footer */
+
 .footer {
   background: #1f2937;
   color: white;
@@ -150,7 +149,7 @@ body, html, .homepage {
   font-size: 14px;
 }
 
-/* 📱 Responsive Tweaks */
+
 @media (max-width: 768px) {
   .header input {
     font-size: 14px;
@@ -172,36 +171,5 @@ body, html, .homepage {
     border-radius: 8px;
     width: 100%;
   }
-}
-
-/* 🔽 Dropdown Search */
-.search-skill {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: #f9fafb; /* abu-abu muda */
-}
-.search-skill select {
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-  background-color: #e5e7eb; /* abu-abu */
-  color: #111827;
-  min-width: 150px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.search-skill select:hover {
-  background-color: #d1d5db;
-}
-
-.search-skill select:focus {
-  outline: none;
-  border-color: #4f46e5; /* biru sesuai tema */
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
 }
 

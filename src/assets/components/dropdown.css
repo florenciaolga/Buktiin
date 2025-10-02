@@ -16,6 +16,6 @@
 }
 
 .filter-bar select:hover {
-  border-color: #4f46e5; /* warna ungu sama seperti theme home.css */
+  border-color: #4f46e5; 
   background-color: #f9fafb;
 }

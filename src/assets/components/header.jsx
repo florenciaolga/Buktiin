@@ -1,15 +1,15 @@
 import React from "react";
 import "./header.css";
 
-function Header() {
+function Header({ active }) {
   return (
     <header className="navbar">
       <div className="logo">BUKTIIN</div>
       <nav className="nav">
-        <a href="#">Home</a>
-        <a href="#">Cari</a>
-        <a href="#">Chat</a>
-        <a href="#">Profil</a>
+        <a href="/" className={active === "home" ? "active" : ""}>Home</a>
+        <a href="/search" className={active === "cari" ? "active" : ""}>Cari</a>
+        <a href="/chat" className={active === "chat" ? "active" : ""}>Chat</a>
+        <a href="/profile" className={active === "profil" ? "active" : ""}>Profil</a>
       </nav>
     </header>
   );

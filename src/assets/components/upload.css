@@ -1,0 +1,125 @@
+.upload-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.upload-container {
+  flex: 1;
+  padding: 20px;
+  background: #f9f9ff;
+}
+
+.upload-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.upload-box {
+  display: flex;
+  position: relative;
+  background: #d9d9ff;
+  padding: 20px;
+  border-radius: 10px;
+  gap: 20px;
+  height : 300px;
+   align-items: center;
+}
+
+.upload-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-placeholder {
+  width: 200px;
+  height: 250px;
+  border: 2px dashed #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.preview-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.upload-icon {
+  width: 40px;
+  height: 40px;
+  color: #666;
+}
+
+.upload-btn {
+  background: black;
+  color: white;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #333;
+}
+
+.upload-text-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding : 20px;
+}
+
+.title-input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  width: 90%;
+}
+
+.desc-input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  width: 90%;
+  min-height: 100px;
+}
+
+.settings-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.settings-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+.hashtags {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.hashtags button {
+  background: #4f46e5;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}

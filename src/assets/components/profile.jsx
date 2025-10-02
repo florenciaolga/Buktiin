@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import "./profile.css";
 
 export default function Profile() {
@@ -15,13 +15,13 @@ export default function Profile() {
 
   return (
     <div className="profile-page">
-      {/* Header */}
-      <Header />
+   
+      <Header active="profil" />
 
-      {/* Profile Section */}
+      
       <div className="profile-container">
         <img
-          src="/profile1.png" // ganti dengan foto profil asli
+          src="/profile1.jpg"
           alt="Profile"
           className="profile-avatar"
         />
@@ -45,7 +45,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Photos Section */}
       <div className="photo-grid">
         {photos.map((p, i) => (
           <div key={i} className="photo-card">
@@ -54,7 +53,6 @@ export default function Profile() {
         ))}
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

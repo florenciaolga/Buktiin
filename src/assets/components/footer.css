@@ -1,6 +1,6 @@
-/* 📌 Footer */
+
 .footer {
-  background: #1f2937; /* abu gelap */
+  background: #667EEA;
   color: white;
   display: flex;
   flex-wrap: wrap;
@@ -27,11 +27,10 @@
 }
 
 .footer p:hover {
-  color: #a5b4fc; /* ungu muda sesuai tema */
+  color: #a5b4fc;
   text-decoration: underline;
 }
 
-/* 📱 Responsive Footer */
 @media (max-width: 768px) {
   .footer {
     flex-direction: column;
