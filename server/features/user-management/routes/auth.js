@@ -6,56 +6,142 @@ const db = require("../../../config/db");
 
 // REGISTER USER
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone } = req.body;
 
   if (!name || !email || !password) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "Name, email and password are required" });
   }
 
   try {
-    db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
-      if (err) return res.status(500).json({ message: "Database error", error: err });
+    // Check if email already exists
+    const [existingUsers] = await db.query(
+      "SELECT * FROM users WHERE email = ?", 
+      [email]
+    );
 
-      if (result.length > 0) {
-        return res.status(400).json({ message: "Email already exists" });
+    if (existingUsers.length > 0) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert new user
+    const [result] = await db.query(
+      "INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)",
+      [name, email, hashedPassword, phone || null]
+    );
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: result.insertId, email }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+
+    return res.status(201).json({ 
+      message: "User registered successfully!",
+      token,
+      user: {
+        id: result.insertId,
+        name,
+        email
       }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      db.query(
-        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-        [name, email, hashedPassword],
-        (err, result) => {
-          if (err) return res.status(500).json({ message: "Failed to register", error: err });
-
-          return res.status(201).json({ message: "User registered successfully!" });
-        }
-      );
     });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong", error });
+    console.error("Registration error:", error);
+    res.status(500).json({ 
+      message: "Something went wrong during registration", 
+      error: error.message 
+    });
   }
 });
 
 // LOGIN
-router.post('/login', (req, res) => {
-    const { email, password } = req.body;
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-    db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
-        if (err) return res.status(500).json({ message: 'Database error' });
-        if (results.length === 0) return res.status(400).json({ message: 'User not found' });
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
 
-        const user = results[0];
+  try {
+    const [users] = await db.query(
+      'SELECT * FROM users WHERE email = ?', 
+      [email]
+    );
 
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (!isMatch) {
-                return res.status(400).json({ message: 'Invalid credentials' });
-            }
+    if (users.length === 0) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
 
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.json({ message: 'Login successful', token });
-        });
+    const user = users[0];
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, email: user.email }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+
+    res.json({ 
+      message: 'Login successful', 
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        is_worker: user.is_worker,
+        profile_image: user.profile_image
+      }
     });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ 
+      message: "Something went wrong during login", 
+      error: error.message 
+    });
+  }
+});
+
+// VERIFY TOKEN (check if user is still authenticated)
+router.get('/verify', async (req, res) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+
+  if (!token) {
+    return res.status(403).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Get user details
+    const [users] = await db.query(
+      'SELECT id, name, email, is_worker, profile_image FROM users WHERE id = ?',
+      [decoded.id]
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ 
+      valid: true,
+      user: users[0]
+    });
+  } catch (error) {
+    return res.status(401).json({ 
+      valid: false,
+      message: 'Invalid or expired token' 
+    });
+  }
 });
 
 module.exports = router;
